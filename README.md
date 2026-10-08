@@ -5,7 +5,7 @@
   <img src="docs/assets/linuxops-logo-light.png" alt="LinuxOps Enterprise Lab" width="440">
 </picture>
 
-# LinuxOps Enterprise Lab
+
 
 **Build systems. Verify behavior. Troubleshoot with evidence.**
 
