@@ -87,7 +87,8 @@ Obtain the expected SHA-256 value from the distribution's official checksum file
 ```powershell
 $labIsoPath = Read-Host "Full path to the downloaded ISO"
 $labExpectedHash = (Read-Host "Official SHA-256 for that exact ISO").Trim()
-if ($labExpectedHash -notmatch '^[0-9a-fA-F]{64} "Expected SHA-256 must contain exactly 64 hexadecimal characters."
+if ($labExpectedHash -notmatch '^[0-9a-fA-F]{64}$') {
+    throw "Expected SHA-256 must contain exactly 64 hexadecimal characters."
 }
 $labActualHash = (Get-FileHash -LiteralPath $labIsoPath -Algorithm SHA256).Hash
 if ($labActualHash -ine $labExpectedHash) {
