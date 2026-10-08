@@ -18,6 +18,20 @@
 > [!NOTE]
 > The phase records completed baseline work. Screenshots independently support selected health and memory checks; other details are contributor observations. The reconstruction guide still awaits a fresh-build validation.
 
+## Phase overview
+
+A baseline is the initial record of a server's identity, access, resources, and health. It provides a reference for later changes: if behavior changes, we can compare new observations with the starting point.
+
+This phase establishes that reference on Haziq's Ubuntu VM and Ruveeha's Rocky Linux VM. It combines historical baseline records with a separate reconstruction guide for readers building a comparable environment.
+
+## Reading paths
+
+| Reader | Suggested order |
+|---|---|
+| New learner | Objectives → setup guide → fresh-build validation |
+| Technical reviewer | Results → baseline records → evidence coverage |
+| Troubleshooting reader | Memory workflow → incident report → evidence index |
+
 ## Start here
 
 | Goal | Document |
@@ -37,6 +51,18 @@ Set up two Linux server VMs, establish administrative access, inspect baseline r
 |---|---|---|---|
 | [Haziq](https://github.com/HaziqBinAfzal) | `web01` | Ubuntu Server 26.04.1 LTS | Server identity, sudo/SSH, CPU, memory, disk, network, and systemd verification |
 | [Ruveeha](https://github.com/ruveeha33) | `backup01` | Rocky Linux 9.8 Minimal | Rocky Linux baseline, LVM/XFS inspection, and Hyper-V memory troubleshooting |
+
+## What the baseline checks tell us
+
+| Check area | Question it answers |
+|---|---|
+| Identity | Are we inspecting the intended server rather than WSL or another guest? |
+| Privileges and access | Can the intended administrator perform authorized work and reach the guest? |
+| Resources and storage | What CPU, memory, swap, and mounted filesystem capacity does the guest expose? |
+| Service state | Are any systemd units currently marked failed? |
+| Host/guest comparison | Does guest behavior agree with the VM configuration? |
+
+Command purposes and interpretation are explained in the baseline documents and setup guide. A successful check answers its specific question; it does not establish overall production readiness.
 
 ## Completed tasks
 
@@ -59,6 +85,8 @@ Set up two Linux server VMs, establish administrative access, inspect baseline r
 | Administrative access | sudo and SSH verified | sudo and SSH verified |
 | Service health | Zero failed systemd units | Zero failed systemd units |
 | Troubleshooting | Baseline health documented | Investigated 609 MiB RAM and corrected Hyper-V Dynamic Memory |
+
+These results combine contributor-recorded observations with selected screenshot-backed checks. The [coverage matrix](docs/evidence-coverage.md) identifies which is which.
 
 Resource readings are point-in-time observations. The servers use separate Hyper-V Default Switch networks; inter-host VM connectivity is not yet established. Each contributor uses Ubuntu WSL for Git operations.
 

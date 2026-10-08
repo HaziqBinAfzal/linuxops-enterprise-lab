@@ -4,6 +4,10 @@
 
 > Historical baseline recorded by Ruveeha. OS/kernel, account, storage, SSH, and package-update details are documented observations; selected screenshots directly support the memory investigation and post-fix health checks.
 
+## On this page
+
+[Server identity](#server-identity) · [Hardware and memory](#hardware-and-memory) · [Storage configuration](#storage-configuration) · [Network](#network) · [Administration verification](#administration-verification) · [Results](#results) · [Learning outcomes](#learning-outcomes) · [Supporting evidence](#supporting-evidence) · [Notes](#notes)
+
 ## Server identity
 
 | Field | Recorded value |
@@ -94,3 +98,7 @@ These commands inspect state; package updates and SSH setup require separate act
 ## Notes
 
 This is a point-in-time baseline. IP addresses, kernel versions, uptime, and utilization may change. Additional dated verification output would be needed to independently corroborate the fields outside the selected evidence.
+
+---
+
+[← Phase 01 overview](../README.md) · [Project overview](../../../README.md) · [Evidence index](../evidence/README.md)

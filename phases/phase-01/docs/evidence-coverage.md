@@ -2,6 +2,10 @@
 
 [← Phase 01](../README.md) · [Screenshot index](../evidence/README.md) · [Setup guide](setup-guide.md)
 
+## On this page
+
+[Evidence categories](#evidence-categories) · [Coverage matrix](#coverage-matrix) · [Interpretation limits](#interpretation-limits) · [Closing evidence gaps](#closing-evidence-gaps)
+
 ## Evidence categories
 
 **Screenshot-backed** means the selected image directly shows the stated observation. **Documented observation** means a contributor's baseline records it, but the six selected screenshots do not independently show it. **Reconstruction guidance** describes a new-build procedure and is not a historical accomplishment.
@@ -35,3 +39,7 @@ Kernel versions, network addresses, uptime, utilization, and package state may c
 ## Closing evidence gaps
 
 For a future verification run, retain selected text output for identity, sudo policy, network/SSH checks, storage, and package transaction outcomes. Record collection time and contributor, redact sensitive details, and submit the record for peer review. These are follow-up verification tasks; they have not been completed by this documentation change.
+
+---
+
+[← Phase 01 overview](../README.md) · [Project overview](../../../README.md) · [Evidence index](../evidence/README.md)

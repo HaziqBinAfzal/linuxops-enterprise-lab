@@ -4,30 +4,40 @@
 
 > Historical baseline recorded by Haziq. Exact OS/kernel, account, network, and update details are documented observations; the selected screenshot directly supports the resource and systemd readings. See the evidence coverage record.
 
+## On this page
+
+[Server identity](#server-identity) · [Hardware and storage](#hardware-and-storage) · [Network](#network) · [Administration verification](#administration-verification) · [Results](#results) · [Learning outcomes](#learning-outcomes) · [Notes](#notes) · [Supporting evidence](#supporting-evidence)
+
 ## Server identity
 
-- Hostname: web01
-- Operating system: Ubuntu Server 26.04.1 LTS
-- Virtualization: Microsoft Hyper-V
-- Kernel: 7.0.0-38-generic
-- Administrator account: haxz
-- Administrative group: sudo
+| Field | Recorded value |
+|---|---|
+| Hostname | web01 |
+| Operating system | Ubuntu Server 26.04.1 LTS |
+| Virtualization | Microsoft Hyper-V |
+| Kernel | 7.0.0-38-generic |
+| Administrator account | haxz |
+| Administrative group | sudo |
 
 ## Hardware and storage
 
-- Virtual CPUs: 2
-- Guest-visible RAM: approximately 3.3 GiB
-- Swap: approximately 3.8 GiB
-- Virtual disk: approximately 127 GiB
-- Root filesystem: ext4 on LVM
-- Root filesystem size: approximately 61 GiB
-- Root usage during baseline: approximately 13%
+| Field | Recorded value |
+|---|---|
+| Virtual CPUs | 2 |
+| Guest-visible RAM | approximately 3.3 GiB |
+| Swap | approximately 3.8 GiB |
+| Virtual disk | approximately 127 GiB |
+| Root filesystem | ext4 on LVM |
+| Root filesystem size | approximately 61 GiB |
+| Root usage during baseline | approximately 13% |
 
 ## Network
 
-- Address observed: 172.19.186.83
-- SSH access: Verified using Windows OpenSSH
-- Network: Hyper-V Default Switch; address may change
+| Field | Recorded value |
+|---|---|
+| Address observed | 172.19.186.83 |
+| SSH access | Verified using Windows OpenSSH |
+| Network | Hyper-V Default Switch; address may change |
 
 ## Administration verification
 
@@ -68,3 +78,7 @@ This is a baseline snapshot. IP addresses and resource usage may change.
 ## Supporting evidence
 
 [Server health screenshot](../evidence/haziq-web01-health.png) shows the CPU count, memory, swap, mounted filesystems, root usage, and failed-unit check. It does not show every field in this document.
+
+---
+
+[← Phase 01 overview](../README.md) · [Project overview](../../../README.md) · [Evidence index](../evidence/README.md)

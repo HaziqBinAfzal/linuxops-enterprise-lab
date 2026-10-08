@@ -2,6 +2,10 @@
 
 [← Phase 01](../README.md) · [Setup guide](setup-guide.md) · [Evidence coverage](evidence-coverage.md)
 
+## On this page
+
+[Incident summary](#incident-summary) · [Investigation](#investigation) · [Corrective action](#corrective-action) · [Post-fix verification](#post-fix-verification) · [Cause assessment and remaining unknowns](#cause-assessment-and-remaining-unknowns) · [Lessons learned](#lessons-learned) · [Evidence](#evidence)
+
 ## Incident summary
 
 | Field | Recorded observation |
@@ -114,3 +118,7 @@ For a future recurrence, capture a timestamped guest reading, full relevant kern
 | Guest after | [Restored memory and zero failed units](../evidence/ruveeha-memory-after.png) |
 
 [Browse scaled previews and full-size originals](../evidence/README.md).
+
+---
+
+[← Phase 01 overview](../README.md) · [Project overview](../../../README.md) · [Evidence index](../evidence/README.md)

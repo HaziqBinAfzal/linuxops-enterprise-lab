@@ -2,6 +2,10 @@
 
 [← Phase 01](../README.md) · [Evidence coverage](evidence-coverage.md) · [Ubuntu baseline](web01-baseline.md) · [Rocky baseline](backup01-baseline.md)
 
+## On this page
+
+[Scope and provenance](#scope-and-provenance) · [1. Prepare each Windows host](#1-prepare-each-windows-host) · [2. Create the new VM in Hyper-V Manager](#2-create-the-new-vm-in-hyper-v-manager) · [3. Install the guest OS](#3-install-the-guest-os) · [4. Update the new VM](#4-update-the-new-vm) · [5. Establish SSH access](#5-establish-ssh-access) · [6. Verify resources and service health](#6-verify-resources-and-service-health) · [7. Record a reviewable result](#7-record-a-reviewable-result) · [Official references](#official-references)
+
 ## Scope and provenance
 
 This is a manual reconstruction guide for a **new, disposable lab**. It is not a transcript of the original setup and does not claim that every command below was previously executed.
@@ -35,7 +39,26 @@ Obtain the expected SHA-256 value from the distribution's official checksum file
 ```powershell
 $labIsoPath = Read-Host "Full path to the downloaded ISO"
 $labExpectedHash = (Read-Host "Official SHA-256 for that exact ISO").Trim()
-if ($labExpectedHash -notmatch '^[0-9a-fA-F]{64} in Hyper-V Manager
+if ($labExpectedHash -notmatch '^[0-9a-fA-F]{64}
+    throw "Expected SHA-256 must contain exactly 64 hexadecimal characters."
+}
+$labActualHash = (Get-FileHash -LiteralPath $labIsoPath -Algorithm SHA256).Hash
+if ($labActualHash -ine $labExpectedHash) {
+    throw "ISO checksum mismatch. Do not use this ISO."
+}
+"SHA-256 matches the supplied official checksum."
+```
+
+| Step | Purpose |
+|---|---|
+| `Read-Host` | Collect the local ISO path and expected checksum without hard-coded personal paths |
+| Hash format check | Reject a malformed expected SHA-256 |
+| `Get-FileHash` | Calculate the downloaded file's SHA-256 |
+| Case-insensitive comparison | Stop on a mismatch; matching case is irrelevant for hexadecimal hashes |
+
+Record the ISO filename, actual checksum, official checksum source, and verification date in the [fresh-build validation record](fresh-build-validation.md).
+
+## 2. Create the new VM in Hyper-V Manager
 
 1. Select **New → Virtual Machine**. Use the VM name from the table and a storage location with enough free space.
 2. For this reconstruction, choose **Generation 2** with compatible 64-bit installation media. The original VM generation is not established by the current evidence.
@@ -229,14 +252,14 @@ Use Ubuntu WSL for these Git operations, not Windows PowerShell or the server gu
 
    These show pending edits, remote destinations, and the current branch. Preserve existing work before switching branches.
 
-4. Fetch the presentation branch from the canonical repository and create a **new validation branch**, so a fresh-build result stays distinct from this presentation update:
+4. Fetch main from the canonical repository and create a **new validation branch**, so a fresh-build result stays distinct from the historical baseline records:
 
    ```bash
-   git fetch git@github.com:HaziqBinAfzal/linuxops-enterprise-lab.git haziq/phase-01-repository-presentation
+   git fetch git@github.com:HaziqBinAfzal/linuxops-enterprise-lab.git main
    git switch -c YOUR_NEW_VALIDATION_BRANCH FETCH_HEAD
    ```
 
-   Replace `YOUR_NEW_VALIDATION_BRANCH` with a new contributor-specific name such as `haziq/phase-01-fresh-build-validation` or `ruveeha/phase-01-fresh-build-validation`. Fetch reads the published branch; switch creates the new local branch at that fetched commit. If the presentation has since merged, use the confirmed canonical main branch instead.
+   Replace `YOUR_NEW_VALIDATION_BRANCH` with a new contributor-specific name such as `haziq/phase-01-fresh-build-validation` or `ruveeha/phase-01-fresh-build-validation`. Fetch reads canonical main; switch creates a new local branch at that fetched commit.
 
 5. After performing the new build, edit the validation record with actual observations and review the changes:
 
@@ -250,7 +273,7 @@ Use Ubuntu WSL for these Git operations, not Windows PowerShell or the server gu
 
    `git diff` reviews unstaged edits; `git add` stages the named record; `git diff --cached` shows exactly what will be committed; `git commit` saves the reviewed change; `git push -u origin HEAD` publishes the current branch to the already-confirmed origin and sets its upstream. Add any new evidence files individually after reviewing them.
 
-6. Open a PR to the canonical repository's appropriate base branch, explain which build was executed, and request the other contributor's review. Confirm the base/head selection in GitHub. If PR #3 is still draft, keep this separate validation change clearly scoped or coordinate it before merging.
+6. Open a PR to the canonical repository's appropriate base branch, explain which build was executed, and request the other contributor's review. Confirm the base/head selection in GitHub. Keep the validation change scoped to the new build and its actual observations.
 
 The validation record starts **Not executed**. Creating a branch or PR is not evidence that the build passed.
 
@@ -262,6 +285,9 @@ The validation record starts **Not executed**. Creating a branch or PR is not ev
 - [Rocky Linux: firewalld guide](https://docs.rockylinux.org/guides/security/firewalld-beginners/)
 
 Follow the documentation for the installed release. This guide has been reviewed as documentation; its new-build procedure has not been executed against the participants' laptops in this change.
+---
+
+[← Phase 01 overview](../README.md) · [Project overview](../../../README.md) · [Evidence index](../evidence/README.md)
 ) {
     throw "Expected SHA-256 must contain exactly 64 hexadecimal characters."
 }
@@ -304,6 +330,18 @@ Choose the language and keyboard, enable the VM network interface, and use the a
 ### Ruveeha — Rocky Linux
 
 Choose **Minimal Install**, enable the network interface, set hostname `backup01`, and select only the new virtual disk as the installation destination. Use an LVM layout with XFS for root/home if reproducing the recorded storage approach; review and record the actual allocation rather than assuming automatic partitioning matches the old baseline. Create `ruveeha` and select the installer option to make the user an administrator. Finish installation, detach the ISO, and reboot.
+
+### Record the installer storage decision
+
+Before accepting partitioning, record the selected virtual disk and proposed mount layout. The procedure deliberately does not prescribe the historical 70 GiB/53.4 GiB Rocky split because the original partitioning transcript is unavailable.
+
+| Guest | Required layout characteristic | What to record |
+|---|---|---|
+| Ubuntu | Root on LVM with ext4 when following this lab's storage approach | EFI/boot partitions, VG/LV names, root size, and unallocated VG space |
+| Rocky | Root/home on LVM with XFS when following this lab's storage approach | EFI/boot partitions, VG/LV names, root/home sizes, and swap |
+| Both | Only the new disposable VHDX is selected | Installer's final storage summary before writing changes |
+
+A different layout can still support the learning exercises, but must be documented as a deviation. After installation, verify it with `lsblk -f`, `df -hT`, and, where LVM is used, `sudo pvs`, `sudo vgs`, and `sudo lvs`. The latter three inspect physical volumes, volume groups, and logical volumes respectively.
 
 Passwords are entered interactively. Do not put them into commands, repository files, or screenshots.
 
@@ -431,18 +469,62 @@ Record the build date, installer provenance, VM settings, actual OS/kernel, acco
 
 Choose important evidence: one clear baseline health capture per server, meaningful troubleshooting before/after, and the reviewed PR. Use existing screenshots only for the historical observations they actually show. Redact credentials, keys, tokens, and confidential details.
 
-From the existing Git checkout in Ubuntu WSL:
+### Git handoff — Ubuntu WSL
 
-| Command | Purpose and interpretation |
-|---|---|
-| `git status` | Check the current branch and pending changes before staging |
-| `git diff` | Review the document edits and ensure no sensitive data is included |
-| `git add PATH_TO_REVIEWED_FILE` | Stage an explicitly reviewed file; replace the placeholder |
-| `git diff --cached` | Inspect exactly what will enter the commit |
-| `git commit -m "docs: record verified Phase 01 results"` | Commit the reviewed record to the current documentation branch |
-| `git push` | Push the current branch if its remote/upstream is already configured; a fork workflow uses the contributor's fork |
+Use Ubuntu WSL for these Git operations, not Windows PowerShell or the server guest. This workflow assumes Git is installed and the contributor's GitHub SSH authentication already works. Never commit an SSH private key.
 
-Open or update the appropriate pull request and have the other contributor review it. Do not use the presentation PR as proof that a new setup run occurred.
+1. **Haziq:** use the existing checkout of `HaziqBinAfzal/linuxops-enterprise-lab`. For a new checkout, clone the repository:
+
+   ```bash
+   git clone git@github.com:HaziqBinAfzal/linuxops-enterprise-lab.git
+   cd linuxops-enterprise-lab
+   ```
+
+   `git clone` downloads the repository and sets `origin`; `cd` enters it.
+
+2. **Ruveeha:** use her existing fork checkout. If a fresh fork is needed, create it using GitHub's **Fork** action first. Then clone the confirmed fork; the example below applies only if its owner/name is `ruveeha33/linuxops-enterprise-lab`:
+
+   ```bash
+   git clone git@github.com:ruveeha33/linuxops-enterprise-lab.git
+   cd linuxops-enterprise-lab
+   ```
+
+   Confirm the actual fork URL before executing; do not assume a fork exists from these instructions.
+
+3. Inspect the checkout before changing branches:
+
+   ```bash
+   git status
+   git remote -v
+   git branch --show-current
+   ```
+
+   These show pending edits, remote destinations, and the current branch. Preserve existing work before switching branches.
+
+4. Fetch main from the canonical repository and create a **new validation branch**, so a fresh-build result stays distinct from the historical baseline records:
+
+   ```bash
+   git fetch git@github.com:HaziqBinAfzal/linuxops-enterprise-lab.git main
+   git switch -c YOUR_NEW_VALIDATION_BRANCH FETCH_HEAD
+   ```
+
+   Replace `YOUR_NEW_VALIDATION_BRANCH` with a new contributor-specific name such as `haziq/phase-01-fresh-build-validation` or `ruveeha/phase-01-fresh-build-validation`. Fetch reads canonical main; switch creates a new local branch at that fetched commit.
+
+5. After performing the new build, edit the validation record with actual observations and review the changes:
+
+   ```bash
+   git diff
+   git add phases/phase-01/docs/fresh-build-validation.md
+   git diff --cached
+   git commit -m "docs: record verified Phase 01 fresh build"
+   git push -u origin HEAD
+   ```
+
+   `git diff` reviews unstaged edits; `git add` stages the named record; `git diff --cached` shows exactly what will be committed; `git commit` saves the reviewed change; `git push -u origin HEAD` publishes the current branch to the already-confirmed origin and sets its upstream. Add any new evidence files individually after reviewing them.
+
+6. Open a PR to the canonical repository's appropriate base branch, explain which build was executed, and request the other contributor's review. Confirm the base/head selection in GitHub. Keep the validation change scoped to the new build and its actual observations.
+
+The validation record starts **Not executed**. Creating a branch or PR is not evidence that the build passed.
 
 ## Official references
 
@@ -452,3 +534,6 @@ Open or update the appropriate pull request and have the other contributor revie
 - [Rocky Linux: firewalld guide](https://docs.rockylinux.org/guides/security/firewalld-beginners/)
 
 Follow the documentation for the installed release. This guide has been reviewed as documentation; its new-build procedure has not been executed against the participants' laptops in this change.
+---
+
+[← Phase 01 overview](../README.md) · [Project overview](../../../README.md) · [Evidence index](../evidence/README.md)

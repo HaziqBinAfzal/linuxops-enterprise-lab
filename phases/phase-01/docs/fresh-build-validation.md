@@ -6,6 +6,10 @@
 
 This is a checklist and blank record for a future test. No execution, pass result, peer review, or new technical accomplishment is claimed. Complete it only after following the setup guide on a new disposable VM.
 
+## On this page
+
+[Run identity](#run-identity) · [Execution checks](#execution-checks) · [Retained output](#retained-output) · [Deviations and corrections](#deviations-and-corrections) · [Selected screenshot evidence](#selected-screenshot-evidence) · [Final decision](#final-decision)
+
 ## Run identity
 
 | Field | Value to record |
@@ -65,3 +69,7 @@ No new screenshots recorded.
 - [ ] Reviewer confirmed the evidence and scope.
 
 **Decision: Pending.** Documentation review alone does not turn this into a passed build.
+
+---
+
+[← Phase 01 overview](../README.md) · [Project overview](../../../README.md) · [Evidence index](../evidence/README.md)
