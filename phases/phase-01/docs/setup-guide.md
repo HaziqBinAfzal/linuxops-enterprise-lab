@@ -281,14 +281,14 @@ Use Ubuntu WSL for these Git operations, not Windows PowerShell or the server gu
 
    `git clone` downloads the repository and sets `origin`; `cd` enters it.
 
-2. **Ruveeha:** as an existing collaborator, use her existing checkout of the canonical repository. A fork is optional, not required. For a new checkout, clone the canonical repository:
+2. **Ruveeha:** as an existing repository collaborator, use her checkout of the canonical repository. For a new checkout:
 
    ```bash
    git clone git@github.com:HaziqBinAfzal/linuxops-enterprise-lab.git
    cd linuxops-enterprise-lab
    ```
 
-   Confirm that `origin` points to the canonical repository before pushing. A reader without write access should fork the repository, clone their own fork, and open a pull request from it.
+   Readers without write access should instead fork the canonical repository and clone their own fork. Confirm the `origin` remote before pushing.
 
 3. Inspect the checkout before changing branches:
 
