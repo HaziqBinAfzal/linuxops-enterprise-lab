@@ -128,14 +128,18 @@ Phase 01 records the initial server baselines, administrative access, resource i
 <details>
 <summary>Preview: Haziq's server health verification</summary>
 
-![Ubuntu web01 server health verification](phases/phase-01/evidence/haziq-web01-health.png)
+<a href="phases/phase-01/evidence/haziq-web01-health.png"><img src="phases/phase-01/evidence/haziq-web01-health.png" alt="Ubuntu web01 server health verification" width="640"></a>
+
+[Open full-size screenshot](phases/phase-01/evidence/haziq-web01-health.png)
 
 </details>
 
 <details>
 <summary>Preview: Ruveeha's memory verification after the fix</summary>
 
-![Rocky Linux backup01 memory and systemd verification](phases/phase-01/evidence/ruveeha-memory-after.png)
+<a href="phases/phase-01/evidence/ruveeha-memory-after.png"><img src="phases/phase-01/evidence/ruveeha-memory-after.png" alt="Rocky Linux backup01 memory and systemd verification" width="640"></a>
+
+[Open full-size screenshot](phases/phase-01/evidence/ruveeha-memory-after.png)
 
 </details>
 
