@@ -24,6 +24,17 @@ Inspect journal and system logs, establish basic monitoring, and investigate ale
 
 These activities describe intended work. Commands and detailed procedures will be added when this phase begins.
 
+## Acceptance criteria — planned
+
+These are requirements for future verification, not completed test results.
+
+| Check | Required evidence for completion |
+|---|---|
+| Collection | Show that a controlled service or test event appears in the chosen log source with a timestamp. |
+| Monitoring | Record baseline resource/service readings and the defined trigger condition. |
+| Alert behavior | Trigger a controlled condition and verify an alert; run a normal-condition check to verify expected non-alert behavior. |
+| Investigation | Link the alert to supporting log context and repeat the health check after resolution. |
+
 ## Contributor responsibilities
 
 | Contributor | Lab server | Planned responsibility |

@@ -1,5 +1,9 @@
 # web01 — Ubuntu Server Baseline
 
+[← Phase 01](../README.md) · [Setup guide](setup-guide.md) · [Evidence coverage](evidence-coverage.md)
+
+> Historical baseline recorded by Haziq. Exact OS/kernel, account, network, and update details are documented observations; the selected screenshot directly supports the resource and systemd readings. See the evidence coverage record.
+
 ## Server identity
 
 - Hostname: web01
@@ -27,18 +31,20 @@
 
 ## Administration verification
 
-Commands used:
+| Command | Purpose | How to interpret it |
+|---|---|---|
+| `hostnamectl` | Inspect hostname, OS, kernel, and virtualization. | Confirm the intended VM name and recorded OS. This distinguishes the server VM from Ubuntu WSL. |
+| `id` | Inspect UID, primary group, and supplementary groups. | Check the administrator account and sudo/wheel membership; group membership alone does not prove the full sudo policy. |
+| `ip -br addr` | Show interface state and assigned addresses concisely. | Use the active VM interface address for SSH. Loopback is not the remote-access address; DHCP addresses can change. |
+| `sudo whoami` | Run a small command with elevated privileges. | Successful authorized elevation prints root. A denial or authentication failure requires investigation. |
+| `sudo -l` | List the current account's permitted sudo commands. | Inspect the actual policy rather than assuming all group members have unrestricted privileges. |
+| `uptime` | Inspect uptime, logged-in sessions, and 1/5/15-minute load averages. | Interpret load with CPU count and workload context. A snapshot alone is not a performance diagnosis. |
+| `free -h` | Display memory and swap in human-readable units. | Compare guest total with configured RAM and inspect available memory; free memory alone excludes reclaimable caches. |
+| `nproc` | Print processing units available to this process. | The recorded result is 2; this is available CPU capacity, not a full hardware inventory. |
+| `df -hT` | Show mounted filesystem capacity, usage, and filesystem type. | Inspect the root mount and available space. This does not show all unallocated disk or volume-group space. |
+| `systemctl --failed --no-pager` | List units in the failed state without opening a pager. | 0 loaded units listed means no units are currently failed; it does not prove that all applications are healthy. |
 
-    hostnamectl
-    id
-    ip -br addr
-    sudo whoami
-    sudo -l
-    uptime
-    free -h
-    nproc
-    df -hT
-    systemctl --failed --no-pager
+These commands inspect state; they do not install, update, or configure the server. Use the setup guide for a new lab build.
 
 ## Results
 
@@ -58,3 +64,7 @@ Commands used:
 ## Notes
 
 This is a baseline snapshot. IP addresses and resource usage may change.
+
+## Supporting evidence
+
+[Server health screenshot](../evidence/haziq-web01-health.png) shows the CPU count, memory, swap, mounted filesystems, root usage, and failed-unit check. It does not show every field in this document.

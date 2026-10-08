@@ -1,4 +1,6 @@
-# Hyper-V Memory Troubleshooting - backup01
+# Hyper-V Memory Troubleshooting — backup01
+
+[← Phase 01](../README.md) · [Setup guide](setup-guide.md) · [Evidence coverage](evidence-coverage.md)
 
 ## Incident Overview
 
@@ -32,6 +34,15 @@ Dynamic Memory was found to be enabled, allowing Hyper-V to adjust the amount of
 
 The configuration was identified as the likely cause of the unexpectedly low guest-visible memory.
 
+## Investigation commands explained
+
+| Environment | Command | Purpose and interpretation |
+|---|---|---|
+| Rocky Linux guest | `free -h` | Compare total guest RAM with the 4 GiB startup setting; the screenshot shows 609 MiB before the fix. |
+| Rocky Linux guest | `grep -E 'MemTotal\|MemAvailable\|SwapTotal' /proc/meminfo` | Inspect detailed memory counters in kB; this corroborates the human-readable memory output. |
+| Rocky Linux guest | `sudo dmesg \| grep -iE 'balloon\|memory hotplug\|hot-add' \| tail -20` | Filter the kernel ring buffer for relevant memory messages; repeated balloon-floor warnings are evidence of memory pressure/balloon behavior, not proof of every underlying cause. |
+| Windows PowerShell (Administrator) | `Get-VMMemory -VMName "backup01" \| Format-List DynamicMemoryEnabled,Startup,Minimum,Maximum,Assigned,MemoryDemand` | Inspect host-side settings. The before screenshot shows Dynamic Memory enabled and startup memory of 4294967296 bytes. |
+
 ## Corrective Action
 
 The `backup01` virtual machine was shut down.
@@ -52,6 +63,15 @@ Hyper-V reported:
     Startup : 4294967296
 
 The virtual machine was then started again.
+
+## Change and verification commands explained
+
+| Environment | Command | Purpose and expected result |
+|---|---|---|
+| Windows PowerShell (Administrator) | `Get-VM -Name "backup01" \| Select-Object Name,State` | Check VM state; the change screenshot shows Off before the memory change. |
+| Windows PowerShell (Administrator) | `Set-VMMemory -VMName "backup01" -DynamicMemoryEnabled $false -StartupBytes 4GB` | Change the stopped lab VM to fixed 4 GiB startup memory. This modifies configuration; it is not a read-only check. |
+| Windows PowerShell (Administrator) | `Get-VMMemory -VMName "backup01" \| Format-List DynamicMemoryEnabled,Startup,Assigned` | Confirm DynamicMemoryEnabled is False and Startup is 4294967296 bytes. Assigned may be unavailable while stopped. |
+| Rocky Linux guest | `systemctl --failed --no-pager` | After boot, inspect failed units; zero listed is a current unit-state observation, not a complete application test. |
 
 ## Post-Fix Verification
 

@@ -8,7 +8,7 @@ A two-person Linux administration portfolio project by **[Haziq](https://github.
 
 **Ubuntu · Rocky Linux · Hyper-V · Bash · GitHub**
 
-[Overview](#project-overview) · [Architecture](#lab-architecture) · [Capabilities](#what-we-are-building) · [Phases](#project-phases) · [Evidence](#verified-work-and-evidence)
+[Overview](#project-overview) · [Architecture](#lab-architecture) · [Scope](#what-we-are-building) · [Phases](#project-phases) · [Evidence](#verified-work-and-evidence)
 
 </div>
 
@@ -20,7 +20,7 @@ LinuxOps Enterprise Lab is a hands-on project for learning and demonstrating how
 
 Haziq works on an Ubuntu server and Ruveeha works on a Rocky Linux server. We practice the same administration topics across both distributions, record what actually happened, and review each other's documentation through GitHub pull requests.
 
-The project follows ten phases. Each phase contains its own overview, objectives, tasks, contributor responsibilities, results, documentation, and selected evidence. The goal is a reproducible record of practical work that another learner or reviewer can follow.
+The project follows ten phases. Each phase contains its own overview, objectives, tasks, contributor responsibilities, results, documentation, and selected evidence. The goal is a practical record another learner or reviewer can follow. The Phase 01 setup guide provides a reconstruction procedure; historical observations and screenshot-backed results are identified separately.
 
 > **Current status:** Phase 01 is completed. Phases 02–10 are planned. This is a learning environment inspired by enterprise administration practices; it is not a production deployment or a completed enterprise platform.
 
@@ -75,18 +75,7 @@ Server names describe intended lab roles. A deployed web service or operational 
 
 ## What we are building
 
-| Area | What the lab covers | Status |
-|---|---|---|
-| Server foundations | OS/kernel identity, sudo, SSH, CPU, memory, storage, network, and systemd health | Documented in Phase 01 |
-| Access management | Users, groups, ownership, permissions, umask, ACLs, and sudo policies | Planned — Phase 02 |
-| Remote access and network security | SSH configuration, host firewalls, and connectivity diagnostics | Planned — Phase 03 |
-| Service operations | Service lifecycle, systemd units, logs, and a practice web service | Planned — Phase 04 |
-| Storage administration | Disks, filesystems, mounts, and LVM | Planned — Phase 05 |
-| Data protection | Backup scope, repeatable backups, and restore verification | Planned — Phase 06 |
-| Operational visibility | Journal investigation, resource checks, and controlled alert investigation | Planned — Phase 07 |
-| Automation | Bash administration scripts, job scheduling, and useful execution records | Planned — Phase 08 |
-| Incident investigation | Controlled problems, evidence-based diagnosis, fixes, and repeat verification | Planned — Phase 09 |
-| Portfolio validation | Configuration review, evidence checks, and a summary of demonstrated capabilities | Planned — Phase 10 |
+The lab progresses from server foundations to access controls, service and storage operations, recovery, monitoring, automation, and incident investigation. The phase table below is the single roadmap and status reference.
 
 ## Project phases
 
@@ -156,7 +145,7 @@ Phase 01 records the initial server baselines, administrative access, resource i
 |---|---|
 | [Main README](README.md) | Project overview, architecture, roadmap, and navigation |
 | [Phase 01](phases/phase-01/README.md) | Completed baseline work and results |
-| [Phase 01 documentation](phases/phase-01/docs/web01-baseline.md) | Server baselines and the memory troubleshooting report, linked from the phase README |
+| [Phase 01 documentation](phases/phase-01/README.md#documentation) | Server baselines and the memory troubleshooting report, linked from the phase README |
 | [Phase 01 evidence](phases/phase-01/evidence/README.md) | Screenshot index and six original PNGs |
 | Phases 02–10 | Dedicated READMEs with planned objectives, tasks, responsibilities, and completion checklists |
 

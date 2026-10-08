@@ -24,6 +24,17 @@ Reproduce, diagnose, resolve, and document common Linux administration incidents
 
 These activities describe intended work. Commands and detailed procedures will be added when this phase begins.
 
+## Acceptance criteria — planned
+
+These are requirements for future verification, not completed test results.
+
+| Check | Required evidence for completion |
+|---|---|
+| Before state | Document a working baseline and one deliberately introduced, reversible lab failure. |
+| Diagnosis | Record the failing check and evidence that supports the proposed cause. |
+| Recovery | Apply the fix and repeat the original failing check successfully. |
+| Explanation | Explain why the fix addresses the evidence and distinguish observed facts from hypotheses. |
+
 ## Contributor responsibilities
 
 | Contributor | Lab server | Planned responsibility |

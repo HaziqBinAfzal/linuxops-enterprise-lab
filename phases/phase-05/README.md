@@ -24,6 +24,17 @@ Inspect disks and filesystems; practice logical volume management and safe stora
 
 These activities describe intended work. Commands and detailed procedures will be added when this phase begins.
 
+## Acceptance criteria — planned
+
+These are requirements for future verification, not completed test results.
+
+| Check | Required evidence for completion |
+|---|---|
+| Inventory | Record lsblk, LVM inventory, and mounted filesystem output before a change. |
+| LVM change | Use designated disposable storage; record before/after LV size and filesystem size, not only one of them. |
+| Persistence | Verify the intended mount after reboot and record its device, mount point, and filesystem. |
+| Data integrity | Compare hashes of a test file before and after the storage change. |
+
 ## Contributor responsibilities
 
 | Contributor | Lab server | Planned responsibility |

@@ -24,6 +24,17 @@ Review configuration, evidence, documentation, and demonstrated lab capabilities
 
 These activities describe intended work. Commands and detailed procedures will be added when this phase begins.
 
+## Acceptance criteria — planned
+
+These are requirements for future verification, not completed test results.
+
+| Check | Required evidence for completion |
+|---|---|
+| Phase audit | Review each phase against its actual acceptance criteria; unresolved items remain incomplete. |
+| Evidence audit | Check documentation links, image references, and agreement between claims and retained output. |
+| Reproduction | Have the peer follow a selected documented procedure and record deviations or missing steps. |
+| Portfolio summary | Separate demonstrated capabilities from future plans and link every major outcome to its record. |
+
 ## Contributor responsibilities
 
 | Contributor | Lab server | Planned responsibility |

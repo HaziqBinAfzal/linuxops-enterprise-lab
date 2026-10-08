@@ -14,3 +14,7 @@ Six selected real Phase 1 screenshots are available below. These are point-in-ti
 | [github-merged-prs.png](github-merged-prs.png) | Both Phase 1 documentation PRs approved and merged |
 
 See the [memory troubleshooting report](../docs/memory-troubleshooting.md) for the detailed incident record.
+
+## Coverage limits
+
+The screenshots directly support selected resource readings, Hyper-V memory settings, and GitHub review/merge outcomes. They do not independently establish every OS/kernel, account, storage, SSH configuration, or package-update detail in the baselines. See the [evidence coverage matrix](../docs/evidence-coverage.md). No additional evidence has been fabricated.

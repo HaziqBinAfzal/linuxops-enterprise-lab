@@ -65,6 +65,8 @@ The successful path is recorded in the [incident report](docs/memory-troubleshoo
 
 ## Documentation
 
+- [Setup and verification guide](docs/setup-guide.md) — a reconstruction procedure for a new lab, not a transcript of the original installation.
+- [Evidence coverage](docs/evidence-coverage.md) — what the screenshots corroborate and what remains a documented observation.
 - [Haziq: Ubuntu `web01` baseline](docs/web01-baseline.md)
 - [Ruveeha: Rocky Linux `backup01` baseline](docs/backup01-baseline.md)
 - [Ruveeha: Hyper-V memory troubleshooting](docs/memory-troubleshooting.md)
@@ -77,6 +79,10 @@ The successful path is recorded in the [incident report](docs/memory-troubleshoo
 
 - [PR #1 — Ubuntu baseline](https://github.com/HaziqBinAfzal/linuxops-enterprise-lab/pull/1)
 - [PR #2 — Rocky Linux baseline and troubleshooting](https://github.com/HaziqBinAfzal/linuxops-enterprise-lab/pull/2)
+
+## Reproduction and evidence limits
+
+The baseline documents record historical results. The setup guide describes how to construct a comparable new lab and validate it. Exact original ISO filenames/checksums, installer choices, VM generation, and installation/update transcripts were not preserved in the current selected evidence; those details must not be inferred from the screenshots.
 
 ## What we learned
 

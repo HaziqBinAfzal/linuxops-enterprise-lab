@@ -24,6 +24,17 @@ Practice Linux accounts, group membership, file ownership, chmod, umask, sudo po
 
 These activities describe intended work. Commands and detailed procedures will be added when this phase begins.
 
+## Acceptance criteria — planned
+
+These are requirements for future verification, not completed test results.
+
+| Check | Required evidence for completion |
+|---|---|
+| Identity and membership | For a new lab user, record id output and confirm the intended primary/supplementary groups. |
+| Permissions and ACLs | Test the same file as an allowed and a denied lab user; record successful access, permission-denied output, and exit status. |
+| umask | Create a file and directory under a chosen umask and compare resulting modes with the intended values. |
+| sudo policy | Validate any edited policy with visudo; record an explicitly permitted command and a disallowed command for the test account. |
+
 ## Contributor responsibilities
 
 | Contributor | Lab server | Planned responsibility |

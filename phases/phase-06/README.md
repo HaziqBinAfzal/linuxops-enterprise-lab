@@ -24,6 +24,17 @@ Develop and test backup and restore procedures for lab data.
 
 These activities describe intended work. Commands and detailed procedures will be added when this phase begins.
 
+## Acceptance criteria — planned
+
+These are requirements for future verification, not completed test results.
+
+| Check | Required evidence for completion |
+|---|---|
+| Backup scope | Record source paths, exclusions, destination, timestamp, and the backup command's exit status. |
+| Restore contents | Restore to a separate test directory; compare relative path sets and SHA-256 hashes of every included regular test file. |
+| Metadata | Where metadata preservation is in scope, compare ownership, modes, and symbolic-link targets. |
+| Recovery result | Record restore duration and investigate every missing/mismatched item; do not mark success from backup creation alone. |
+
 ## Contributor responsibilities
 
 | Contributor | Lab server | Planned responsibility |

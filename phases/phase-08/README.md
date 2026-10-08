@@ -24,6 +24,17 @@ Write Bash administration scripts and practice scheduled jobs.
 
 These activities describe intended work. Commands and detailed procedures will be added when this phase begins.
 
+## Acceptance criteria — planned
+
+These are requirements for future verification, not completed test results.
+
+| Check | Required evidence for completion |
+|---|---|
+| Script success | Run a script against an expected lab state and record output and a successful exit code. |
+| Failure handling | Test a missing input or unavailable service; record a nonzero exit and a useful error message. |
+| Scheduling | Record scheduler configuration and timestamped evidence of at least two scheduled executions. |
+| Permissions and logs | Document the execution account, relevant permissions, and where output/errors are retained. |
+
 ## Contributor responsibilities
 
 | Contributor | Lab server | Planned responsibility |

@@ -1,0 +1,201 @@
+# Phase 01 — Setup and Verification Guide
+
+[← Phase 01](../README.md) · [Evidence coverage](evidence-coverage.md) · [Ubuntu baseline](web01-baseline.md) · [Rocky baseline](backup01-baseline.md)
+
+## Scope and provenance
+
+This is a manual reconstruction guide for a **new, disposable lab**. It is not a transcript of the original setup and does not claim that every command below was previously executed.
+
+Historical baselines record Ubuntu Server 26.04.1 LTS and Rocky Linux 9.8 Minimal. Exact ISO names/checksums, VM generation, original installer partitioning choices, and update transcripts were not preserved in the selected evidence. Record these during a new build. Current installation media and updates may produce different versions and layouts.
+
+The guide reproduces the baseline workflow, not an identical disk image. Existing working VMs do not need to be rebuilt to use the read-only verification sections.
+
+## 1. Prepare each Windows host
+
+Use a Windows edition that supports Hyper-V, hardware virtualization enabled in firmware, and sufficient free RAM and disk space. Enable Hyper-V through **Turn Windows features on or off**, restart if requested, then open Hyper-V Manager. Ubuntu WSL is the Git workspace; it is separate from the server VM.
+
+| Item | Haziq | Ruveeha |
+|---|---|---|
+| Server VM name | `web01` | `backup01` |
+| Guest OS | Ubuntu Server | Rocky Linux Minimal |
+| Guest administrator | `haxz` | `ruveeha` |
+| CPU allocation for this reconstruction | 2 virtual processors | 2 virtual processors |
+| RAM allocation for this reconstruction | Fixed 4 GiB | Fixed 4 GiB |
+| New virtual disk for this reconstruction | 128 GiB dynamically expanding VHDX | 128 GiB dynamically expanding VHDX |
+| Virtual switch | Local Hyper-V Default Switch | Local Hyper-V Default Switch |
+
+These are reconstruction choices, not independently proven original host settings. A dynamically expanding disk grows as data is written; monitor host free space.
+
+Download the selected installer ISO from [Ubuntu](https://ubuntu.com/download/server) or [Rocky Linux](https://rockylinux.org/download). Verify it using the distribution's published checksum/signature instructions. Record the exact filename, version, checksum, download source, and date.
+
+## 2. Create the new VM in Hyper-V Manager
+
+1. Select **New → Virtual Machine**. Use the VM name from the table and a storage location with enough free space.
+2. For this reconstruction, choose **Generation 2** with compatible 64-bit installation media. The original VM generation is not established by the current evidence.
+3. Assign 4096 MB startup memory and leave **Dynamic Memory disabled**.
+4. Select the **Default Switch** for the network adapter.
+5. Create a new 128 GiB VHDX. Do not attach a physical Windows disk or an existing disk containing important data.
+6. Attach the verified ISO as installation media.
+7. Open VM settings and set **2 virtual processors**.
+8. For Linux Secure Boot, use **Microsoft UEFI Certificate Authority** when supported by the selected media. Investigate incompatible media/settings rather than assuming the original lab used the same configuration.
+9. Start the VM and connect through the Hyper-V console.
+
+Expected outcome: the installer boots and sees only the intended new virtual disk.
+
+## 3. Install the guest OS
+
+### Haziq — Ubuntu Server
+
+Choose the language and keyboard, enable the VM network interface, and use the appropriate default package mirror. Install to the new virtual disk; select the installer LVM option if reproducing the baseline's storage approach. Set the hostname to `web01` and create `haxz` as the normal administrative account. Select OpenSSH server when offered. Finish installation, detach the ISO, and reboot into the installed disk.
+
+### Ruveeha — Rocky Linux
+
+Choose **Minimal Install**, enable the network interface, set hostname `backup01`, and select only the new virtual disk as the installation destination. Use an LVM layout with XFS for root/home if reproducing the recorded storage approach; review and record the actual allocation rather than assuming automatic partitioning matches the old baseline. Create `ruveeha` and select the installer option to make the user an administrator. Finish installation, detach the ISO, and reboot.
+
+Passwords are entered interactively. Do not put them into commands, repository files, or screenshots.
+
+### Verify installation identity — inside each Linux VM
+
+| Command | Purpose | Acceptance criterion |
+|---|---|---|
+| `hostnamectl` | Inspect host, OS, kernel, and virtualization | Intended hostname and chosen OS are displayed; record the actual version |
+| `whoami` | Identify the current user | Haziq sees haxz; Ruveeha sees ruveeha |
+| `id` | Inspect group membership | Expected administrator group is present |
+| `sudo whoami` | Test effective administrative access | Authorized elevation prints root |
+| `sudo -l` | Inspect the effective sudo policy | The policy permits the intended administration work |
+
+If sudo is denied, use the VM console and the installation's administrator access to diagnose account/group/policy configuration. Do not assume group membership alone proves permission.
+
+## 4. Update the new VM
+
+Run only the commands for the correct distribution. Review each package transaction before accepting it.
+
+### Haziq — Ubuntu guest
+
+```bash
+sudo apt update
+sudo apt upgrade
+sudo reboot
+```
+
+| Command | Purpose and verification |
+|---|---|
+| `sudo apt update` | Refresh package metadata; resolve repository/signature errors before upgrading |
+| `sudo apt upgrade` | Apply available upgrades after reviewing the transaction; record successful completion or any deferred packages |
+| `sudo reboot` | Restart the guest; the SSH session closes and must be re-established |
+
+### Ruveeha — Rocky guest
+
+```bash
+sudo dnf upgrade
+sudo reboot
+```
+
+| Command | Purpose and verification |
+|---|---|
+| `sudo dnf upgrade` | Apply updates from enabled repositories after reviewing the transaction; record success or errors |
+| `sudo reboot` | Restart the guest so a newly installed kernel can become active |
+
+After reconnecting, use `uname -r` to record the running kernel and `uptime` to inspect uptime. Their outputs do not independently prove that the package transaction succeeded; preserve its outcome separately.
+
+## 5. Establish SSH access
+
+Run server commands in the Linux VM console. Keep console access available while testing SSH.
+
+### Haziq — Ubuntu guest
+
+```bash
+sudo apt install openssh-server
+sudo systemctl enable --now ssh
+systemctl status ssh --no-pager
+```
+
+The first command installs the SSH server if absent. The second enables boot startup and starts the service. The status command checks service state. On Ubuntu installations using socket activation, also inspect `systemctl status ssh.socket --no-pager`; an active socket may start the daemon on demand.
+
+### Ruveeha — Rocky guest
+
+```bash
+sudo dnf install openssh-server
+sudo systemctl enable --now sshd
+systemctl status sshd --no-pager
+```
+
+The first command installs the package, the second enables/starts the daemon, and the third checks its state. Expect an active service or investigate the status and logs.
+
+### Both guests — address and listener checks
+
+| Command | Purpose and expected result |
+|---|---|
+| `ip -br addr` | Identify the active VM interface and current IP address |
+| `sudo ss -lntp` | Inspect TCP listening sockets and owning processes; check SSH's configured port, normally 22 |
+| `sudo journalctl -u ssh -n 30 --no-pager` | Ubuntu service diagnostics if needed |
+| `sudo journalctl -u sshd -n 30 --no-pager` | Rocky service diagnostics if needed |
+
+Inspect the existing firewall before changing it. On Ubuntu, `sudo ufw status` reports UFW state. If active and blocking the intended lab connection, `sudo ufw allow 22/tcp` permits the default SSH port. This modifies a rule; it does not itself enable UFW.
+
+On Rocky, `sudo firewall-cmd --state` checks whether firewalld is running and `sudo firewall-cmd --get-active-zones` identifies the guest interface's zone. If running and SSH is blocked, use that actual zone:
+
+```bash
+sudo firewall-cmd --zone=YOUR_ACTIVE_ZONE --add-service=ssh
+sudo firewall-cmd --zone=YOUR_ACTIVE_ZONE --permanent --add-service=ssh
+sudo firewall-cmd --zone=YOUR_ACTIVE_ZONE --query-service=ssh
+```
+
+Replace `YOUR_ACTIVE_ZONE` before execution. The first command changes runtime policy, the second persists it, and the third verifies runtime permission. This is new-build guidance, not evidence that firewall changes occurred in the original lab. Review restrictions and hardening in Phase 03.
+
+### Windows PowerShell — connect from the same host
+
+Replace the example addresses with each VM's current IP:
+
+```powershell
+ssh haxz@YOUR_WEB01_IP
+ssh ruveeha@YOUR_BACKUP01_IP
+```
+
+Haziq runs the first command on Haziq's host; Ruveeha runs the second on Ruveeha's host. Each invokes the Windows SSH client and authenticates to the local guest. Verify a new host key against the guest console before accepting it. For example, `sudo ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub` prints the guest's public host-key fingerprint for comparison.
+
+After login, `hostnamectl` and `whoami` must identify the intended guest/account. Do not blindly remove known-host entries when a key changes. These tests do not establish connectivity between Haziq's and Ruveeha's separate VM networks.
+
+## 6. Verify resources and service health
+
+The two baseline documents explain each inspection command. Run the relevant commands, record actual output, and compare it with the intended new-build settings.
+
+| Check | Command | Acceptance criterion |
+|---|---|---|
+| CPU capacity | `nproc` | 2 processing units available for this reconstruction |
+| Memory and swap | `free -h` | Guest memory is consistent with the configured allocation after overhead; investigate a large shortfall |
+| Disk layout | `lsblk -f` | Expected new disk, logical volumes, filesystem types, and mounts are present |
+| Filesystem space | `df -hT` | Root is mounted with the intended filesystem and adequate free space |
+| Failed units | `systemctl --failed --no-pager` | Zero failed units, or each failure is explicitly investigated |
+| Current kernel | `uname -r` | Running kernel recorded after reboot |
+| Load and uptime | `uptime` | Snapshot recorded and interpreted with CPU/workload context |
+
+A 4 GiB Hyper-V allocation does not necessarily appear as exactly 4.0 GiB in the guest. Use the [memory incident report](memory-troubleshooting.md) for the observed 609 MiB failure and its verified resolution.
+
+## 7. Record a reviewable result
+
+Record the build date, installer provenance, VM settings, actual OS/kernel, account, storage layout, SSH verification, package transaction outcome, and resource checks. Explain deviations from the historical baseline rather than editing old observations to match a new run.
+
+Choose important evidence: one clear baseline health capture per server, meaningful troubleshooting before/after, and the reviewed PR. Use existing screenshots only for the historical observations they actually show. Redact credentials, keys, tokens, and confidential details.
+
+From the existing Git checkout in Ubuntu WSL:
+
+| Command | Purpose and interpretation |
+|---|---|
+| `git status` | Check the current branch and pending changes before staging |
+| `git diff` | Review the document edits and ensure no sensitive data is included |
+| `git add PATH_TO_REVIEWED_FILE` | Stage an explicitly reviewed file; replace the placeholder |
+| `git diff --cached` | Inspect exactly what will enter the commit |
+| `git commit -m "docs: record verified Phase 01 results"` | Commit the reviewed record to the current documentation branch |
+| `git push` | Push the current branch if its remote/upstream is already configured; a fork workflow uses the contributor's fork |
+
+Open or update the appropriate pull request and have the other contributor review it. Do not use the presentation PR as proof that a new setup run occurred.
+
+## Official references
+
+- [Microsoft: Generation 1 and 2 VM guidance](https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/plan/should-i-create-a-generation-1-or-2-virtual-machine-in-hyper-v)
+- [Ubuntu: OpenSSH server installation](https://help.ubuntu.com/community/SSH)
+- [Rocky Linux: DNF package management](https://docs.rockylinux.org/guides/package_management/dnf_package_manager/)
+- [Rocky Linux: firewalld guide](https://docs.rockylinux.org/guides/security/firewalld-beginners/)
+
+Follow the documentation for the installed release. This guide has been reviewed as documentation; its new-build procedure has not been executed against the participants' laptops in this change.

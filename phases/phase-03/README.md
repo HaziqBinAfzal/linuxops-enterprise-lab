@@ -24,6 +24,17 @@ Verify secure remote administration, SSH configuration, host firewalls, and netw
 
 These activities describe intended work. Commands and detailed procedures will be added when this phase begins.
 
+## Acceptance criteria — planned
+
+These are requirements for future verification, not completed test results.
+
+| Check | Required evidence for completion |
+|---|---|
+| SSH access | Show a successful login as an authorized test account and a failed login for a deliberately invalid credential; retain corresponding server log context without secrets. |
+| Configuration | Validate the daemon configuration with sshd -t and record relevant effective settings with sshd -T. |
+| Firewall | From a stated reachable client, demonstrate the intended allowed port and a denied test port; document firewall state and distinguish denial from a stopped service. |
+| Network scope | Record source/destination addresses and routing assumptions; do not claim inter-host connectivity without a successful test. |
+
 ## Contributor responsibilities
 
 | Contributor | Lab server | Planned responsibility |

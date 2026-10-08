@@ -24,6 +24,17 @@ Manage Linux services, startup behavior, logs, and a practice web service.
 
 These activities describe intended work. Commands and detailed procedures will be added when this phase begins.
 
+## Acceptance criteria — planned
+
+These are requirements for future verification, not completed test results.
+
+| Check | Required evidence for completion |
+|---|---|
+| Lifecycle | Record active/inactive state after start/stop and enabled/disabled state after the relevant change. |
+| Boot behavior | Reboot a disposable lab VM and verify the intended service starts. |
+| Service function | For the chosen web service, show a successful local request with the expected response, plus a remote test only if connectivity is established. |
+| Failure diagnosis | Capture a controlled failure, relevant journal entries, the fix, and a successful repeat check. |
+
 ## Contributor responsibilities
 
 | Contributor | Lab server | Planned responsibility |
