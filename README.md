@@ -1,21 +1,14 @@
 # LinuxOps Enterprise Lab
 
-**Hands-on, two-person Linux system administration lab**
+## Overview
 
-A collaborative portfolio project by **[Haziq](https://github.com/HaziqBinAfzal)** and **[Ruveeha](https://github.com/ruveeha33)**. We administer separate Ubuntu and Rocky Linux virtual machines, document verified work, and collaborate through peer-reviewed GitHub pull requests.
+A hands-on Linux administration portfolio project by **[Haziq](https://github.com/HaziqBinAfzal)** and **[Ruveeha](https://github.com/ruveeha33)**. We work on Ubuntu and Rocky Linux server VMs to practice system administration, security, storage, backups, monitoring, automation, and troubleshooting.
 
-This is a **learning environment**, not a production deployment.
+We document verified results and review each other's work through GitHub pull requests. This is a learning lab; future work is marked **Planned**.
 
-## Lab overview
+## Project phases
 
-| Server | Operating system | Host environment | Contributor | Role |
-|---|---|---|---|---|
-| `web01` | Ubuntu Server 26.04.1 LTS | Hyper-V VM | Haziq | Ubuntu administration; planned web-service lab |
-| `backup01` | Rocky Linux 9.8 Minimal | Hyper-V VM | Ruveeha | Rocky Linux administration; planned backup lab |
-
-Each contributor uses Ubuntu WSL for Git operations. The VMs currently run on separate Hyper-V Default Switch networks; inter-host VM connectivity is not yet established.
-
-## Phases
+Start with Phase 01, then follow the phases in order. Each phase has its own README with its objectives, tasks, documentation, and available evidence.
 
 | Phase | Topic | Status |
 |---|---|---|
@@ -30,17 +23,4 @@ Each contributor uses Ubuntu WSL for Git operations. The VMs currently run on se
 | 09 | [Troubleshooting Exercises](phases/phase-09/README.md) | Planned |
 | 10 | [Final Validation & Portfolio](phases/phase-10/README.md) | Planned |
 
-Select a phase above to view its own README, tasks, documentation, and available evidence.
-
-## Phase 1 highlights
-
-We verified OS/kernel identity, sudo and SSH access, networking, CPU, memory, LVM/filesystem layouts, and systemd health on both servers. On Rocky Linux `backup01`, a Hyper-V Dynamic Memory issue reduced guest-visible RAM to approximately **609 MiB**; after disabling Dynamic Memory, the guest reported approximately **3.6 GiB** and zero failed systemd units.
-
-[Explore Phase 1 →](phases/phase-01/README.md)
-
-## Collaboration
-
-- [PR #1: Haziq's Ubuntu server baseline](https://github.com/HaziqBinAfzal/linuxops-enterprise-lab/pull/1)
-- [PR #2: Ruveeha's Rocky Linux baseline and troubleshooting](https://github.com/HaziqBinAfzal/linuxops-enterprise-lab/pull/2)
-
-**Security:** Never publish private keys, credentials, tokens, or sensitive host information. Lab IP addresses and resource readings are point-in-time observations.
+Server details, technical results, troubleshooting records, screenshots, and phase-specific pull requests are documented inside their respective phases.
