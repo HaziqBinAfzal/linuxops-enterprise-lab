@@ -2,119 +2,115 @@
 
 [← Phase 01](../README.md) · [Setup guide](setup-guide.md) · [Evidence coverage](evidence-coverage.md)
 
-## Incident Overview
+## Incident summary
 
-Server: backup01
+| Field | Recorded observation |
+|---|---|
+| Server | `backup01` — Rocky Linux 9.8 Minimal on Hyper-V |
+| Symptom | Approximately 609 MiB RAM visible in the guest despite 4 GiB startup memory |
+| Related evidence | Repeated `hv_balloon` balloon-floor warnings; Dynamic Memory enabled |
+| Corrective action | Shut down the VM, disable Dynamic Memory, retain 4 GiB startup memory, and restart |
+| Verified result | Approximately 3.6 GiB RAM, approximately 3.1 GiB available, zero swap usage, and zero failed systemd units |
+| Status | Resolved for the observed guest-memory symptom |
 
-Operating System: Rocky Linux 9.8 Minimal
-
-Virtualization Platform: Microsoft Hyper-V
-
-Incident Type: Virtual Machine Memory Configuration
-
-Status: Resolved
-
-## Problem Description
-
-The Rocky Linux virtual machine was configured with 4 GiB of startup memory in Hyper-V.
-
-However, the guest operating system reported approximately 609 MiB of total RAM.
-
-This was significantly lower than expected and could affect server performance, package management, and system services.
+The reduced memory could affect workloads and package management. No measured application outage or performance loss was preserved, so this report does not claim one.
 
 ## Investigation
 
-The `free -h` command was used to inspect available system memory.
-
-Kernel messages showed repeated `hv_balloon` warnings, including messages indicating that the balloon floor had been reached.
-
-The Hyper-V virtual machine configuration was then examined.
-
-Dynamic Memory was found to be enabled, allowing Hyper-V to adjust the amount of physical memory assigned to the guest.
-
-The configuration was identified as the likely cause of the unexpectedly low guest-visible memory.
-
-## Investigation commands explained
-
-| Environment | Command | Purpose and interpretation |
+| Check | Observation | Interpretation |
 |---|---|---|
-| Rocky Linux guest | `free -h` | Compare total guest RAM with the 4 GiB startup setting; the screenshot shows 609 MiB before the fix. |
-| Rocky Linux guest | `grep -E 'MemTotal\|MemAvailable\|SwapTotal' /proc/meminfo` | Inspect detailed memory counters in kB; this corroborates the human-readable memory output. |
-| Rocky Linux guest | `sudo dmesg \| grep -iE 'balloon\|memory hotplug\|hot-add' \| tail -20` | Filter the kernel ring buffer for relevant memory messages; repeated balloon-floor warnings are evidence of memory pressure/balloon behavior, not proof of every underlying cause. |
-| Windows PowerShell (Administrator) | `Get-VMMemory -VMName "backup01" \| Format-List DynamicMemoryEnabled,Startup,Minimum,Maximum,Assigned,MemoryDemand` | Inspect host-side settings. The before screenshot shows Dynamic Memory enabled and startup memory of 4294967296 bytes. |
+| Guest memory | 609 MiB total | Large shortfall compared with the configured startup allocation |
+| Kernel messages | Repeated balloon-floor warnings | Relevant Hyper-V balloon behavior; not a complete explanation of host memory decisions |
+| Host memory settings | Dynamic Memory True; Startup 4294967296 bytes | The host could adjust the guest allocation |
+| Post-change guest check | Approximately 3.6 GiB total | Expected allocation restored after using fixed memory |
 
-## Corrective Action
+### Guest commands — Rocky Linux
 
-The `backup01` virtual machine was shut down.
+```bash
+free -h
+grep -E 'MemTotal|MemAvailable|SwapTotal' /proc/meminfo
+sudo dmesg | grep -iE 'balloon|memory hotplug|hot-add' | tail -20
+```
 
-The following command was executed in Windows PowerShell with administrative privileges:
+- `free -h` summarizes RAM and swap; inspect total and available memory.
+- The `grep` command selects detailed memory counters from `/proc/meminfo`.
+- `sudo dmesg` reads the kernel ring buffer; the filters select memory-related messages and retain the last 20 matching lines. A filtered view can omit context, so review surrounding messages when needed.
 
-    Set-VMMemory -VMName "backup01" -DynamicMemoryEnabled $false -StartupBytes 4GB
+### Host command — Windows PowerShell (Administrator)
 
-This disabled Dynamic Memory and configured the VM to use 4 GiB of startup memory.
+```powershell
+Get-VMMemory -VMName "backup01" |
+    Format-List DynamicMemoryEnabled,Startup,Minimum,Maximum,Assigned,MemoryDemand
+```
 
-The configuration was verified using:
+`Get-VMMemory` inspects VM memory settings; `Format-List` makes the selected properties readable. The before screenshot establishes Dynamic Memory and startup settings, but does not preserve a full host memory-pressure history.
 
-    Get-VMMemory -VMName "backup01" | Format-List DynamicMemoryEnabled,Startup,Assigned
+## Corrective action
 
-Hyper-V reported:
+The VM was shut down before changing memory settings.
 
-    DynamicMemoryEnabled : False
-    Startup : 4294967296
+```powershell
+Get-VM -Name "backup01" | Select-Object Name,State
+Set-VMMemory -VMName "backup01" -DynamicMemoryEnabled $false -StartupBytes 4GB
+Get-VMMemory -VMName "backup01" |
+    Format-List DynamicMemoryEnabled,Startup,Assigned
+```
 
-The virtual machine was then started again.
-
-## Change and verification commands explained
-
-| Environment | Command | Purpose and expected result |
+| Command | Purpose | Recorded outcome |
 |---|---|---|
-| Windows PowerShell (Administrator) | `Get-VM -Name "backup01" \| Select-Object Name,State` | Check VM state; the change screenshot shows Off before the memory change. |
-| Windows PowerShell (Administrator) | `Set-VMMemory -VMName "backup01" -DynamicMemoryEnabled $false -StartupBytes 4GB` | Change the stopped lab VM to fixed 4 GiB startup memory. This modifies configuration; it is not a read-only check. |
-| Windows PowerShell (Administrator) | `Get-VMMemory -VMName "backup01" \| Format-List DynamicMemoryEnabled,Startup,Assigned` | Confirm DynamicMemoryEnabled is False and Startup is 4294967296 bytes. Assigned may be unavailable while stopped. |
-| Rocky Linux guest | `systemctl --failed --no-pager` | After boot, inspect failed units; zero listed is a current unit-state observation, not a complete application test. |
+| `Get-VM` with `Select-Object` | Inspect VM power state | Off before the change |
+| `Set-VMMemory` | Change the stopped VM to fixed 4 GiB startup memory | Configuration changed |
+| `Get-VMMemory` | Verify the resulting settings | DynamicMemoryEnabled False; Startup 4294967296 bytes |
 
-## Post-Fix Verification
+These commands run on the Windows Hyper-V host. The change command modifies configuration; it is not an inspection command.
 
-After restarting Rocky Linux, the following commands were executed:
+The VM was then started again. Its start command and boot timeline are not preserved in the six-image evidence set.
 
-    free -h
-    systemctl --failed --no-pager
+## Post-fix verification
 
-The operating system reported approximately 3.6 GiB of total memory.
+Run inside the Rocky Linux guest:
 
-Approximately 3.1 GiB was available during verification.
+```bash
+free -h
+systemctl --failed --no-pager
+```
 
-Swap usage was zero.
+`free -h` checks the resulting memory allocation. `systemctl --failed --no-pager` inspects current failed-unit state without a pager.
 
-No failed systemd units were reported.
+| Result | Recorded reading |
+|---|---|
+| Total RAM | Approximately 3.6 GiB |
+| Available RAM | Approximately 3.1 GiB |
+| Swap | 2 GiB total; zero used |
+| Failed units | 0 loaded units listed |
 
-The expected memory capacity was restored.
+This verifies the observed memory symptom and current systemd failure state. It is not a complete application, performance, or security acceptance test.
 
-## Root Cause Assessment
+## Cause assessment and remaining unknowns
 
-The investigation linked the reduced guest-visible memory to Hyper-V Dynamic Memory behavior.
+The before/after evidence supports an association between Hyper-V Dynamic Memory behavior and the reduced allocation. Disabling Dynamic Memory and restarting restored the expected guest-visible memory.
 
-Disabling Dynamic Memory and restarting the virtual machine restored the expected memory allocation.
+The evidence does **not** establish why the host reduced allocation so far. Host memory pressure, demand readings over time, and other host-side factors were not captured. The change and restart occurred together, so this record does not isolate their individual effects through a controlled comparison.
 
-The observed before-and-after results support this assessment.
+### Optional follow-up investigation — not performed
 
-## Lessons Learned
+For a future recurrence, capture a timestamped guest reading, full relevant kernel context, host available memory, and VM assigned/demand/minimum/maximum settings **before** changing configuration. Repeat after the change and correlate the times. Do not re-enable Dynamic Memory on the working VM solely to recreate the incident.
 
-Hypervisor memory settings can directly affect guest operating system performance.
+## Lessons learned
 
-Memory allocation should be verified from both the host and the guest.
-
-Kernel warnings can provide useful troubleshooting evidence.
-
-Configuration changes should be followed by verification.
-
-Documenting the original problem and final result makes troubleshooting reproducible.
+- Compare guest observations with host configuration.
+- Treat a successful fix as evidence of recovery while keeping cause claims proportionate.
+- Distinguish configured memory, assigned memory, and guest-visible memory.
+- Verify a change and preserve its outcome.
+- Keep useful incident context rather than only the final healthy state.
 
 ## Evidence
 
-- [Guest memory before the fix](../evidence/ruveeha-memory-before.png)
-- [Hyper-V memory configuration before the fix](../evidence/ruveeha-hyperv-before.png)
-- [Hyper-V configuration after disabling Dynamic Memory](../evidence/ruveeha-hyperv-after.png)
-- [Guest memory and service health after the fix](../evidence/ruveeha-memory-after.png)
+| Stage | Original screenshot |
+|---|---|
+| Guest before | [Memory and balloon warnings](../evidence/ruveeha-memory-before.png) |
+| Host before | [Dynamic Memory settings](../evidence/ruveeha-hyperv-before.png) |
+| Host change and check | [Dynamic Memory disabled](../evidence/ruveeha-hyperv-after.png) |
+| Guest after | [Restored memory and zero failed units](../evidence/ruveeha-memory-after.png) |
 
-[All Phase 1 screenshots](../evidence/README.md)
+[Browse scaled previews and full-size originals](../evidence/README.md).

@@ -65,6 +65,7 @@ The successful path is recorded in the [incident report](docs/memory-troubleshoo
 
 ## Documentation
 
+- [Fresh-build validation record](docs/fresh-build-validation.md) — unexecuted checklist for testing the reconstruction guide.
 - [Setup and verification guide](docs/setup-guide.md) — a reconstruction procedure for a new lab, not a transcript of the original installation.
 - [Evidence coverage](docs/evidence-coverage.md) — what the screenshots corroborate and what remains a documented observation.
 - [Haziq: Ubuntu `web01` baseline](docs/web01-baseline.md)

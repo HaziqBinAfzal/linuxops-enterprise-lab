@@ -24,6 +24,17 @@ The project follows ten phases. Each phase contains its own overview, objectives
 
 > **Current status:** Phase 01 is completed. Phases 02–10 are planned. This is a learning environment inspired by enterprise administration practices; it is not a production deployment or a completed enterprise platform.
 
+## Current deliverables
+
+| Available now | Still to be demonstrated |
+|---|---|
+| Two documented server baselines | Access-control exercises |
+| One memory troubleshooting record with before/after evidence | Service deployment and recovery |
+| Six original screenshots and reviewed documentation PRs | Backup restore tests and monitoring |
+| Setup guidance and a clearly unexecuted validation checklist | Bash automation and scheduled checks |
+
+This repository currently contains documentation and evidence. Administration scripts, service configurations, and automation results will be added as their phases are performed.
+
 ## Why this project exists
 
 Knowing a command is one part of administration. We also want to explain why we used it, interpret its output, diagnose unexpected behavior, verify a change, and leave useful documentation for the next person.
@@ -123,6 +134,8 @@ Phase 01 records the initial server baselines, administrative access, resource i
 | [Ubuntu baseline](phases/phase-01/docs/web01-baseline.md) | Haziq's `web01` configuration and verification |
 | [Rocky Linux baseline](phases/phase-01/docs/backup01-baseline.md) | Ruveeha's `backup01` configuration and verification |
 | [Memory troubleshooting](phases/phase-01/docs/memory-troubleshooting.md) | Symptoms, investigation, corrective action, and post-fix checks |
+| [Setup guide](phases/phase-01/docs/setup-guide.md) | Instructions for a comparable new lab build |
+| [Fresh-build validation](phases/phase-01/docs/fresh-build-validation.md) | Pending execution checklist; no pass claimed |
 | [Six real screenshots](phases/phase-01/evidence/README.md) | Server health, memory before/after, and merged documentation PRs |
 
 <details>
