@@ -24,6 +24,16 @@ A baseline is the initial record of a server's identity, access, resources, and 
 
 This phase establishes that reference on Haziq's Ubuntu VM and Ruveeha's Rocky Linux VM. It combines historical baseline records with a separate reconstruction guide for readers building a comparable environment.
 
+## Follow this lab yourself
+
+You can build **one Ubuntu or Rocky Linux VM** and follow the same baseline verification process. You do not need access to our computers, IP addresses, or GitHub write permissions.
+
+**[Start the step-by-step setup and command guide](docs/setup-guide.md#quick-start-for-readers)**
+
+The guide separates Windows PowerShell, Linux guest terminals, and optional WSL Git commands. It explains the commands, expected observations, and how to handle differences. Use the [fresh-build validation record](docs/fresh-build-validation.md) to document your own results.
+
+> The original Phase 1 observations are completed and documented. The public reconstruction instructions are provided for learning, but a separate fresh-build test has **not yet been recorded**. Do not treat the historical screenshots as proof that a new installation passed.
+
 ## Reading paths
 
 | Reader | Suggested order |
