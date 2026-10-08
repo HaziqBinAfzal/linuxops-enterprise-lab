@@ -26,6 +26,9 @@ This phase establishes that reference on Haziq's Ubuntu VM and Ruveeha's Rocky L
 
 ## Follow this lab yourself
 
+**New to Linux? [Follow the complete Phase 01 tutorial, step by step](docs/follow-along-lab.md).** It includes the exact commands to run on Windows, Ubuntu or Rocky Linux, why each command matters, and how to check the result.
+
+
 You can build **one Ubuntu or Rocky Linux VM** and follow the same baseline verification process. You do not need access to our computers, IP addresses, or GitHub write permissions.
 
 **[Start the step-by-step setup and command guide](docs/setup-guide.md#quick-start-for-readers)**
