@@ -5,7 +5,7 @@
   <img src="../../docs/assets/linuxops-logo-light.png" alt="LinuxOps Enterprise Lab" width="260">
 </picture>
 
-# Phase 01 — Server Baseline & Initial Administration
+# Phase 01: Server Baseline & Initial Administration
 
 **Status: Completed**
 
