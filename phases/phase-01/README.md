@@ -15,6 +15,18 @@
 
 ---
 
+> [!NOTE]
+> The phase records completed baseline work. Screenshots independently support selected health and memory checks; other details are contributor observations. The reconstruction guide still awaits a fresh-build validation.
+
+## Start here
+
+| Goal | Document |
+|---|---|
+| Recreate the environment | [Setup guide](docs/setup-guide.md) · [Pending validation](docs/fresh-build-validation.md) |
+| Compare the two servers | [Ubuntu baseline](docs/web01-baseline.md) · [Rocky Linux baseline](docs/backup01-baseline.md) |
+| Follow the memory investigation | [Incident report](docs/memory-troubleshooting.md) |
+| Check supporting proof | [Evidence index](evidence/README.md) · [Coverage limits](docs/evidence-coverage.md) |
+
 ## Objectives
 
 Set up two Linux server VMs, establish administrative access, inspect baseline resource and service health, troubleshoot observed issues, and document the results.
@@ -70,12 +82,14 @@ The successful path is recorded in the [incident report](docs/memory-troubleshoo
 
 ## Documentation
 
-- [Fresh-build validation record](docs/fresh-build-validation.md) — unexecuted checklist for testing the reconstruction guide.
-- [Setup and verification guide](docs/setup-guide.md) — a reconstruction procedure for a new lab, not a transcript of the original installation.
-- [Evidence coverage](docs/evidence-coverage.md) — what the screenshots corroborate and what remains a documented observation.
-- [Haziq: Ubuntu `web01` baseline](docs/web01-baseline.md)
-- [Ruveeha: Rocky Linux `backup01` baseline](docs/backup01-baseline.md)
-- [Ruveeha: Hyper-V memory troubleshooting](docs/memory-troubleshooting.md)
+| Record | Purpose |
+|---|---|
+| [Setup and verification guide](docs/setup-guide.md) | Reconstruct a comparable lab with explained commands |
+| [Fresh-build validation](docs/fresh-build-validation.md) | Unexecuted checklist; no successful rebuild claimed |
+| [Ubuntu baseline](docs/web01-baseline.md) | Haziq's server observations and their interpretation |
+| [Rocky Linux baseline](docs/backup01-baseline.md) | Ruveeha's server observations and their interpretation |
+| [Memory troubleshooting](docs/memory-troubleshooting.md) | Symptoms, investigation, change, and post-fix checks |
+| [Evidence coverage](docs/evidence-coverage.md) | Screenshot-backed checks and documented observations |
 
 ## Evidence
 

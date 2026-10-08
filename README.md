@@ -5,6 +5,7 @@
   <img src="docs/assets/linuxops-logo-light.png" alt="LinuxOps Enterprise Lab" width="440">
 </picture>
 
+# LinuxOps Enterprise Lab
 
 
 **Build systems. Verify behavior. Troubleshoot with evidence.**
@@ -13,7 +14,7 @@ A two-person Linux administration portfolio project by **[Haziq](https://github.
 
 **Ubuntu · Rocky Linux · Hyper-V · Bash · GitHub**
 
-[Overview](#project-overview) · [Architecture](#lab-architecture) · [Scope](#what-we-are-building) · [Phases](#project-phases) · [Evidence](#verified-work-and-evidence)
+[Overview](#project-overview) · [Start here](#start-here) · [Phases](#project-phases) · [Architecture](#lab-architecture) · [Evidence](#verified-work-and-evidence) · [Documentation](#repository-guide)
 
 </div>
 
@@ -21,13 +22,42 @@ A two-person Linux administration portfolio project by **[Haziq](https://github.
 
 ## Project overview
 
-LinuxOps Enterprise Lab is a hands-on project for learning and demonstrating how Linux systems are administered: establishing a baseline, controlling access, managing services and storage, protecting data, monitoring health, automating routine work, and investigating failures.
+LinuxOps Enterprise Lab is a two-person Linux administration project built on **Ubuntu Server and Rocky Linux VMs in Hyper-V**. Haziq and Ruveeha practice administration, explain their commands, investigate failures, and review each other's results through GitHub pull requests.
 
-Haziq works on an Ubuntu server and Ruveeha works on a Rocky Linux server. We practice the same administration topics across both distributions, record what actually happened, and review each other's documentation through GitHub pull requests.
+The ten phases progress from server baselines to access control, services, storage, recovery, monitoring, and automation. Each phase has a dedicated README; technical procedures and real evidence live alongside the work they support.
 
-The project follows ten phases. Each phase contains its own overview, objectives, tasks, contributor responsibilities, results, documentation, and selected evidence. The goal is a practical record another learner or reviewer can follow. The Phase 01 setup guide provides a reconstruction procedure; historical observations and screenshot-backed results are identified separately.
+> [!IMPORTANT]
+> **Phase 01 is completed; Phases 02–10 are Planned.** The repository currently contains documentation and evidence. Service deployments, backup restores, monitoring, and automation are future exercises.
 
-> **Current status:** Phase 01 is completed. Phases 02–10 are planned. This is a learning environment inspired by enterprise administration practices; it is not a production deployment or a completed enterprise platform.
+## Start here
+
+| Your goal | Open this |
+|---|---|
+| Understand the completed work | [Phase 01 overview](phases/phase-01/README.md) |
+| Build a comparable lab | [Setup and verification guide](phases/phase-01/docs/setup-guide.md) |
+| Inspect a real troubleshooting example | [Hyper-V memory investigation](phases/phase-01/docs/memory-troubleshooting.md) |
+| Review the proof and its limits | [Screenshot index](phases/phase-01/evidence/README.md) · [Evidence coverage](phases/phase-01/docs/evidence-coverage.md) |
+| Plan the next exercise | [Phase 02 — Users, Groups & Permissions](phases/phase-02/README.md) |
+
+> [!NOTE]
+> The setup guide reconstructs a comparable environment. Its [fresh-build validation](phases/phase-01/docs/fresh-build-validation.md) is pending; a successful independent rebuild has not been claimed.
+
+## Project phases
+
+Start with Phase 01. Open any phase to see its dedicated README and the records available for that stage.
+
+| Phase | Topic | Purpose | Status |
+|---|---|---|---|
+| 01 | [Server Baseline & Initial Administration](phases/phase-01/README.md) | Establish server identity, access, resources, and health | Completed |
+| 02 | [Users, Groups & Permissions](phases/phase-02/README.md) | Practice account management and access controls | Planned |
+| 03 | [SSH & Network Security](phases/phase-03/README.md) | Practice remote access and network protection | Planned |
+| 04 | [Services & systemd](phases/phase-04/README.md) | Manage and troubleshoot services | Planned |
+| 05 | [Storage & LVM](phases/phase-05/README.md) | Manage lab storage and filesystems | Planned |
+| 06 | [Backups & Restore Testing](phases/phase-06/README.md) | Protect data and verify recovery | Planned |
+| 07 | [Logging & Monitoring](phases/phase-07/README.md) | Observe system state and investigate events | Planned |
+| 08 | [Bash Automation & Scheduling](phases/phase-08/README.md) | Make routine administration repeatable | Planned |
+| 09 | [Troubleshooting Exercises](phases/phase-09/README.md) | Diagnose and resolve controlled incidents | Planned |
+| 10 | [Final Validation & Portfolio](phases/phase-10/README.md) | Review outcomes and supporting evidence | Planned |
 
 ## Current deliverables
 
@@ -80,7 +110,8 @@ flowchart TB
     RW -->|"Commits and pull requests"| G
 ```
 
-**The VMs are on separate Hyper-V Default Switch networks. Inter-host VM connectivity has not been established.** The diagram represents local administration and GitHub collaboration; it does not claim a connected server network.
+> [!NOTE]
+> The VMs use separate Hyper-V Default Switch networks. Inter-host VM connectivity has not been established. The diagram shows local administration and shared GitHub documentation.
 
 | Contributor | Server | Operating system | Current purpose | Future lab direction |
 |---|---|---|---|---|
@@ -88,27 +119,6 @@ flowchart TB
 | Ruveeha | `backup01` | Rocky Linux 9.8 Minimal | Baseline verification and memory troubleshooting | Practice backup administration |
 
 Server names describe intended lab roles. A deployed web service or operational backup service is not claimed at this stage.
-
-## What we are building
-
-The lab progresses from server foundations to access controls, service and storage operations, recovery, monitoring, automation, and incident investigation. The phase table below is the single roadmap and status reference.
-
-## Project phases
-
-Start with Phase 01. Open any phase to see its dedicated README and the records available for that stage.
-
-| Phase | Topic | Purpose | Status |
-|---|---|---|---|
-| 01 | [Server Baseline & Initial Administration](phases/phase-01/README.md) | Establish server identity, access, resources, and health | Completed |
-| 02 | [Users, Groups & Permissions](phases/phase-02/README.md) | Practice account management and access controls | Planned |
-| 03 | [SSH & Network Security](phases/phase-03/README.md) | Practice remote access and network protection | Planned |
-| 04 | [Services & systemd](phases/phase-04/README.md) | Manage and troubleshoot services | Planned |
-| 05 | [Storage & LVM](phases/phase-05/README.md) | Manage lab storage and filesystems | Planned |
-| 06 | [Backups & Restore Testing](phases/phase-06/README.md) | Protect data and verify recovery | Planned |
-| 07 | [Logging & Monitoring](phases/phase-07/README.md) | Observe system state and investigate events | Planned |
-| 08 | [Bash Automation & Scheduling](phases/phase-08/README.md) | Make routine administration repeatable | Planned |
-| 09 | [Troubleshooting Exercises](phases/phase-09/README.md) | Diagnose and resolve controlled incidents | Planned |
-| 10 | [Final Validation & Portfolio](phases/phase-10/README.md) | Review outcomes and supporting evidence | Planned |
 
 ## How we work
 
@@ -161,6 +171,9 @@ Phase 01 records the initial server baselines, administrative access, resource i
 
 </details>
 
+> [!NOTE]
+> Screenshots corroborate health and memory readings and the reviewed PRs. OS versions, package updates, sudo checks, and SSH configuration also contain contributor-recorded observations; see [evidence coverage](phases/phase-01/docs/evidence-coverage.md) before interpreting them as screenshot proof.
+
 ## Repository guide
 
 | Location | Contents |
@@ -181,3 +194,22 @@ Phase 01 records the initial server baselines, administrative access, resource i
 ## Lab boundaries
 
 Resource readings and IP addresses are point-in-time observations. Publish only appropriately reviewed lab evidence; exclude credentials, private keys, tokens, and confidential information. Backup, security, and automation tasks remain planned until their phase records demonstrate completion.
+
+## Documentation principles
+
+| Principle | What a reader should find |
+|---|---|
+| Explain the command | Purpose, expected output, and how to interpret the result |
+| Separate observation from expectation | Historical readings distinguished from new-build instructions |
+| Verify a change | Before/after checks and the limits of the retained evidence |
+| Keep progress honest | Planned work stays Planned until performed and reviewed |
+| Make navigation useful | Phase overview, technical records, evidence index, and return links |
+
+---
+
+<div align="center">
+
+**LinuxOps Enterprise Lab** · Built and documented by Haziq & Ruveeha  
+[Explore Phase 01](phases/phase-01/README.md) · [Review evidence](phases/phase-01/evidence/README.md) · [Back to top](#linuxops-enterprise-lab)
+
+</div>
