@@ -45,6 +45,24 @@ Set up two Linux server VMs, establish administrative access, inspect baseline r
 
 Resource readings are point-in-time observations. The servers use separate Hyper-V Default Switch networks; inter-host VM connectivity is not yet established. Each contributor uses Ubuntu WSL for Git operations.
 
+## Memory troubleshooting workflow
+
+The investigation compared guest readings with host configuration and verified the result after changing Dynamic Memory.
+
+```mermaid
+flowchart TD
+    A["Guest reports 609 MiB"] --> B["Inspect memory and hv_balloon warnings"]
+    B --> C["Check Hyper-V memory configuration"]
+    C --> D{"Dynamic Memory enabled"}
+    D -->|"Observed: True"| E["Shut down VM and disable Dynamic Memory"]
+    E --> F["Start VM and repeat health checks"]
+    F --> G{"Expected memory restored"}
+    G -->|"Observed: 3.6 GiB"| H["Document fix and zero failed units"]
+    G -->|"If verification fails"| B
+```
+
+The successful path is recorded in the [incident report](docs/memory-troubleshooting.md). The retry branch describes how to continue investigation if a check fails; it is not an additional incident claim.
+
 ## Documentation
 
 - [Haziq: Ubuntu `web01` baseline](docs/web01-baseline.md)
