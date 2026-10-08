@@ -1,7 +1,3 @@
-<p align="center">
-<img src="../../../docs/assets/linuxops-enterprise-lab-logo.png" alt="LinuxOps Enterprise Lab logo" width="280">
-</p>
-
 # Phase 01 — Setup and Verification Guide
 
 [← Phase 01](../README.md) · [Evidence coverage](evidence-coverage.md) · [Ubuntu baseline](web01-baseline.md) · [Rocky baseline](backup01-baseline.md)

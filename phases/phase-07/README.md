@@ -1,6 +1,9 @@
 <div align="center">
 
-<img src="../../docs/assets/linuxops-enterprise-lab-logo.png" alt="LinuxOps Enterprise Lab logo" width="360">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="../../docs/assets/linuxops-logo-dark.png">
+  <img src="../../docs/assets/linuxops-logo-light.png" alt="LinuxOps Enterprise Lab" width="260">
+</picture>
 
 # Phase 07 — Logging & Monitoring
 

@@ -1,6 +1,9 @@
 <div align="center">
 
-<img src="docs/assets/linuxops-enterprise-lab-logo.png" alt="LinuxOps Enterprise Lab logo" width="520">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/linuxops-logo-dark.png">
+  <img src="docs/assets/linuxops-logo-light.png" alt="LinuxOps Enterprise Lab" width="440">
+</picture>
 
 # LinuxOps Enterprise Lab
 
