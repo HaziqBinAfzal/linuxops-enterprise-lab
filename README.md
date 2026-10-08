@@ -76,6 +76,25 @@ The project is divided into ten stages so that each topic has a focused workspac
 
 **This main README explains the project as a whole.** Open a phase for its objectives, tasks, command explanations, technical records, results, and screenshots.
 
+### Learning areas and their relationships
+
+This map shows how the subjects support one another. It describes the curriculum, not completed infrastructure.
+
+```mermaid
+flowchart TB
+    F["Server foundations"] --> A["Access and networking"]
+    F --> S["Services and storage"]
+    A --> O["Logs and monitoring"]
+    S --> R["Backup and recovery"]
+    S --> O
+    O --> T["Troubleshooting"]
+    R --> T
+    O --> B["Bash automation"]
+    B --> V["Final validation"]
+    T --> V
+    R --> V
+```
+
 ## Project phases
 
 | Phase | Topic | Status |
@@ -156,6 +175,24 @@ The architecture shows local access on each host and collaboration through GitHu
 
 ## How we work
 
+### From lab work to reviewed documentation
+
+Verification and peer review both have a correction path. An unexpected result sends us back to investigate; review feedback sends the record back for improvement.
+
+```mermaid
+flowchart TB
+    P["Define objective and checks"] --> W["Perform lab work"]
+    W --> V{"Checks pass"}
+    V -->|"No"| I["Investigate and adjust"]
+    I --> W
+    V -->|"Yes"| D["Document observations and evidence"]
+    D --> PR["Open pull request"]
+    PR --> R{"Peer review"}
+    R -->|"Changes requested"| D
+    R -->|"Approved"| M["Merge reviewed records"]
+    M --> U["Update phase status"]
+```
+
 ### Plan the exercise
 
 We identify the objective, the environment involved, the expected behavior, and the checks needed to assess the result. Planned work is kept visible without presenting it as completed.
@@ -208,6 +245,22 @@ This is an evolving learning project. It does not claim production readiness, a 
 | Each phase README | Objectives, tasks, contributor responsibilities, status, and results |
 | Phase documentation | Explained procedures, technical records, and troubleshooting |
 | Phase evidence | Real screenshots, captions, and evidence limits |
+
+### How the records connect
+
+The main README directs readers to a phase overview. Procedures and evidence support the results recorded there, while return links keep the reader oriented.
+
+```mermaid
+flowchart TB
+    M["Main README"] -->|"Choose a phase"| P["Phase README"]
+    P -->|"Follow instructions"| D["Technical documentation"]
+    P -->|"Inspect proof"| E["Evidence index"]
+    D -->|"Supports"| R["Phase results"]
+    E -->|"Corroborates"| R
+    D -->|"Return link"| P
+    E -->|"Return link"| P
+    R -->|"Summarized in"| P
+```
 
 ### How to browse
 
