@@ -31,7 +31,7 @@ Set up two Linux server VMs, establish administrative access, inspect baseline r
 
 ## Evidence
 
-[Browse the Phase 1 evidence index](evidence/README.md). Selected real screenshots will be added before this presentation update is merged.
+[Browse the Phase 1 evidence index](evidence/README.md). Six real screenshots document server health, the memory investigation and fix, and the merged documentation PRs.
 
 ## GitHub collaboration
 

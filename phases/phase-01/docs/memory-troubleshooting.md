@@ -92,10 +92,9 @@ Documenting the original problem and final result makes troubleshooting reproduc
 
 ## Evidence
 
-SS-01-Ruveeha-Rocky-Memory.png: Guest memory before the fix.
+- [Guest memory before the fix](../evidence/ruveeha-memory-before.png)
+- [Hyper-V memory configuration before the fix](../evidence/ruveeha-hyperv-before.png)
+- [Hyper-V configuration after disabling Dynamic Memory](../evidence/ruveeha-hyperv-after.png)
+- [Guest memory and service health after the fix](../evidence/ruveeha-memory-after.png)
 
-SS-02-Ruveeha-HyperV-Memory.png: Hyper-V memory configuration before the fix.
-
-SS-03-Ruveeha-Fixed-Memory.png: Hyper-V configuration after disabling Dynamic Memory.
-
-SS-04-Ruveeha-Memory-Verified.png: Guest memory and service health after the fix.
+[All Phase 1 screenshots](../evidence/README.md)

@@ -2,7 +2,7 @@
 
 [← Phase 01 overview](../README.md)
 
-Selected real screenshots are planned for this directory. The documentation is available now; image links below will work once the PNGs are uploaded.
+Six selected real Phase 1 screenshots are available below. These are point-in-time records from the lab and GitHub collaboration.
 
 | Evidence | What it shows |
 |---|---|
