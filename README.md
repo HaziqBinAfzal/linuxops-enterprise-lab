@@ -1,14 +1,28 @@
+<div align="center">
+
 # LinuxOps Enterprise Lab
+
+**Linux Administration · Security · Automation · Troubleshooting**
+
+A hands-on portfolio project by **[Haziq](https://github.com/HaziqBinAfzal)** and **[Ruveeha](https://github.com/ruveeha33)**.
+
+[Overview](#overview) · [Project phases](#project-phases) · [Start Phase 01](phases/phase-01/README.md)
+
+**Ubuntu & Rocky Linux · Documented Results · Peer Review**
+
+</div>
+
+---
 
 ## Overview
 
-A hands-on Linux administration portfolio project by **[Haziq](https://github.com/HaziqBinAfzal)** and **[Ruveeha](https://github.com/ruveeha33)**. We work on Ubuntu and Rocky Linux server VMs to practice system administration, security, storage, backups, monitoring, automation, and troubleshooting.
+We administer separate Ubuntu and Rocky Linux server VMs to practice system administration, security, storage, backups, monitoring, and Bash automation. We document verified work and review each other's contributions through GitHub pull requests.
 
-We document verified results and review each other's work through GitHub pull requests. This is a learning lab; future work is marked **Planned**.
+This is a learning lab. **Phase 01 is completed; Phases 02–10 are planned.**
 
 ## Project phases
 
-Start with Phase 01, then follow the phases in order. Each phase has its own README with its objectives, tasks, documentation, and available evidence.
+Follow the phases in order. Each phase opens its own README with objectives, contributor responsibilities, tasks, results, documentation, and available evidence.
 
 | Phase | Topic | Status |
 |---|---|---|
@@ -23,4 +37,4 @@ Start with Phase 01, then follow the phases in order. Each phase has its own REA
 | 09 | [Troubleshooting Exercises](phases/phase-09/README.md) | Planned |
 | 10 | [Final Validation & Portfolio](phases/phase-10/README.md) | Planned |
 
-Server details, technical results, troubleshooting records, screenshots, and phase-specific pull requests are documented inside their respective phases.
+Technical details and screenshots live inside their respective phases. Begin with [Phase 01 — Server Baseline & Initial Administration](phases/phase-01/README.md).

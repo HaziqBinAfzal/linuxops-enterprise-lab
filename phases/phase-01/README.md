@@ -1,6 +1,14 @@
+<div align="center">
+
 # Phase 01 — Server Baseline & Initial Administration
 
-**Status: Completed** · [← Project overview](../../README.md) · [Next: Phase 02 →](../phase-02/README.md)
+**Status: Completed**
+
+[Project overview](../../README.md) · [Objectives](#objectives) · [Results](#verified-results) · [Documentation](#documentation) · [Evidence](#evidence) · [Next: Phase 02](../phase-02/README.md)
+
+</div>
+
+---
 
 ## Objectives
 
@@ -22,6 +30,20 @@ Set up two Linux server VMs, establish administrative access, inspect baseline r
 - Investigated Rocky Linux showing 609 MiB of guest-visible RAM with `hv_balloon` warnings.
 - Disabled Hyper-V Dynamic Memory and verified approximately 3.6 GiB of guest-visible RAM.
 - Submitted, peer-reviewed, and merged the Phase 1 documentation through two pull requests.
+
+## Verified results
+
+| Area | Haziq — `web01` | Ruveeha — `backup01` |
+|---|---|---|
+| Virtualization | Hyper-V VM | Hyper-V VM |
+| Virtual CPUs | 2 | 2 |
+| Guest-visible memory | Approximately 3.3 GiB | Approximately 3.6 GiB after the fix |
+| Root filesystem | ext4 on LVM | XFS on LVM |
+| Administrative access | sudo and SSH verified | sudo and SSH verified |
+| Service health | Zero failed systemd units | Zero failed systemd units |
+| Troubleshooting | Baseline health documented | Investigated 609 MiB RAM and corrected Hyper-V Dynamic Memory |
+
+Resource readings are point-in-time observations. The servers use separate Hyper-V Default Switch networks; inter-host VM connectivity is not yet established. Each contributor uses Ubuntu WSL for Git operations.
 
 ## Documentation
 

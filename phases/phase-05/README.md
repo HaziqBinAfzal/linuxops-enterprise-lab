@@ -1,19 +1,48 @@
+<div align="center">
+
 # Phase 05 — Storage & LVM
 
-**Status: Planned** · [← Project overview](../../README.md)
+**Status: Planned**
+
+[Project overview](../../README.md) · [Previous: Phase 04](../phase-04/README.md) · [Next: Phase 06](../phase-06/README.md)
+
+</div>
+
+---
 
 ## Overview
 
 Inspect disks and filesystems; practice logical volume management and safe storage changes.
 
-## Planned activities
+## Objectives and planned tasks
 
-Detailed tasks, commands, verification results, and troubleshooting notes will be added when this phase begins.
+| Area | Planned task | Intended verification |
+|---|---|---|
+| Storage inventory | Inspect disks, partitions, filesystems, and logical volumes. | Document the lab storage layout. |
+| LVM practice | Practice logical volume changes on designated lab storage. | Verify sizes and filesystem state. |
+| Mount management | Practice filesystem mounts and configuration. | Validate mount behavior. |
 
-## Documentation and evidence
+These activities describe intended work. Commands and detailed procedures will be added when this phase begins.
+
+## Contributor responsibilities
+
+| Contributor | Lab server | Planned responsibility |
+|---|---|---|
+| [Haziq](https://github.com/HaziqBinAfzal) | Ubuntu `web01` | Perform the phase activities, document results, and review Ruveeha's contribution. |
+| [Ruveeha](https://github.com/ruveeha33) | Rocky Linux `backup01` | Perform the phase activities, document results, and review Haziq's contribution. |
+
+## Results
 
 Not started. No completion or validation claims are made for this phase.
 
-## Contributors
+## Documentation and evidence
 
-Haziq and Ruveeha will work on their respective Linux servers and submit changes for peer review.
+Technical notes and selected screenshots will be added here after work is performed and verified. No evidence is available yet.
+
+## Completion checklist
+
+- [ ] Perform the planned lab activities.
+- [ ] Verify and document actual results.
+- [ ] Record meaningful troubleshooting, if needed.
+- [ ] Add selected evidence with sensitive information redacted.
+- [ ] Submit a pull request and complete peer review.
