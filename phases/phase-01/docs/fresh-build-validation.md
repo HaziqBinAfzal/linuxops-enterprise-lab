@@ -1,3 +1,7 @@
+<p align="center">
+<img src="../../../docs/assets/linuxops-enterprise-lab-logo.png" alt="LinuxOps Enterprise Lab logo" width="280">
+</p>
+
 # Phase 01 — Fresh-build Validation Record
 
 [← Phase 01](../README.md) · [Setup guide](setup-guide.md) · [Evidence coverage](evidence-coverage.md)

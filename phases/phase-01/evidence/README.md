@@ -1,3 +1,7 @@
+<p align="center">
+<img src="../../../docs/assets/linuxops-enterprise-lab-logo.png" alt="LinuxOps Enterprise Lab logo" width="280">
+</p>
+
 # Phase 01 — Screenshot Evidence
 
 [← Phase 01 overview](../README.md)

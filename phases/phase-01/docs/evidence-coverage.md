@@ -1,3 +1,7 @@
+<p align="center">
+<img src="../../../docs/assets/linuxops-enterprise-lab-logo.png" alt="LinuxOps Enterprise Lab logo" width="280">
+</p>
+
 # Phase 01 — Evidence Coverage
 
 [← Phase 01](../README.md) · [Screenshot index](../evidence/README.md) · [Setup guide](setup-guide.md)

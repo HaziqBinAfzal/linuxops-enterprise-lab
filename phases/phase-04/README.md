@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="../../docs/assets/linuxops-enterprise-lab-logo.png" alt="LinuxOps Enterprise Lab logo" width="360">
+
 # Phase 04 — Services & systemd
 
 **Status: Planned**

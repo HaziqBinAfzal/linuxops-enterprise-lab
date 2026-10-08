@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="../../docs/assets/linuxops-enterprise-lab-logo.png" alt="LinuxOps Enterprise Lab logo" width="360">
+
 # Phase 05 — Storage & LVM
 
 **Status: Planned**
